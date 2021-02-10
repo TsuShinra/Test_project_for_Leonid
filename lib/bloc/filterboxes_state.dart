@@ -1,7 +1,5 @@
-part of 'filterboxes_cubit.dart';
+part of 'filterboxes_bloc.dart';
 
-
-@immutable
 abstract class FilterBoxesState extends Equatable {
   final List<BoxItem> boxes;
   final String filter;

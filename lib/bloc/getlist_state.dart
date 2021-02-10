@@ -1,8 +1,10 @@
-part of 'getlist_cubit.dart';
+part of 'getlist_bloc.dart';
 
-@immutable
-abstract class GetlistState {
+abstract class GetlistState extends Equatable {
   const GetlistState();
+  
+  @override
+  List<Object> get props => [];
 }
 
 class GetlistInitial extends GetlistState {

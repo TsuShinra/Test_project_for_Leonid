@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../cubit/getlist_cubit.dart';
+import '../bloc/getlist_bloc.dart';
 
 class InitialBuild extends StatelessWidget {
   const InitialBuild();
@@ -12,8 +12,8 @@ class InitialBuild extends StatelessWidget {
       child: RaisedButton(
         color: Theme.of(context).accentColor,
         onPressed: () {
-          final weatherCubit = BlocProvider.of<GetlistCubit>(context);
-          weatherCubit.getBoxes();
+          final weatherBloc = BlocProvider.of<GetlistBloc>(context);
+          weatherBloc.add(GetList());
         },
         child: Text('Запросить данные'),
       ),

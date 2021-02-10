@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/box_item.dart';
-import '../cubit/openbox_cubit.dart';
-import '../cubit/filterboxes_cubit.dart';
+import '../bloc/openbox_bloc.dart';
 import './block_item.dart';
+import './column_builder.dart';
 
 class ShowList extends StatelessWidget {
   const ShowList({
@@ -21,31 +21,36 @@ class ShowList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: (mediaQuery.size.height -
-                appBar.preferredSize.height -
-                mediaQuery.padding.top) *
-            0.7,
-        child: ListView.builder(
-            itemBuilder: (ctx, i) {
-              return BlocBuilder<OpenboxCubit, OpenboxState>(
-                builder: (context, state) {
-                  return BlocBuilder<FilterBoxesCubit, FilterBoxesState>(
-                    builder: (context, state) {
-                      return GestureDetector(
-                        onTap: () => BlocProvider.of<OpenboxCubit>(context)
-                            .expandItem(boxes, i),
-                        child: Container(
-                          child: BlockItem(
-                              title: boxes[i].title,
-                              text: boxes[i].text,
-                              expanded: boxes[i].expanded),
-                        ),
-                      );
-                    },
-                  );
-                },
+      height: (mediaQuery.size.height -
+              appBar.preferredSize.height -
+              mediaQuery.padding.top) +
+          0.9,
+      child: BlocProvider(
+          create: (BuildContext context) => OpenboxBloc(),
+          child: BlocBuilder<OpenboxBloc, OpenboxState>(
+            builder: (context, state) {
+              return SingleChildScrollView(
+                child: ColumnBuilder(
+                  itemBuilder: (ctx, i) {
+                    return GestureDetector(
+                      onTap: () {
+                        final openboxesBloc =
+                            BlocProvider.of<OpenboxBloc>(context);
+                        openboxesBloc.add(OpenBox(boxes, i));
+                      },
+                      child: Container(
+                        child: BlockItem(
+                            title: boxes[i].title,
+                            text: boxes[i].text,
+                            expanded: boxes[i].expanded),
+                      ),
+                    );
+                  },
+                  itemCount: boxes.length,
+                ),
               );
             },
-            itemCount: boxes.length));
+          )),
+    );
   }
 }

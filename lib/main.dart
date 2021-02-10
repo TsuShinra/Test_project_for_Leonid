@@ -2,10 +2,10 @@ import 'package:Test_Project_for_L/screens/more_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import './cubit/getlist_cubit.dart';
-import './cubit/openbox_cubit.dart';
-import './cubit/filterboxes_cubit.dart';
+
+import './bloc/filterboxes_bloc.dart';
 import './models/boxes_fakeAPI.dart';
+import './bloc/getlist_bloc.dart';
 
 import './screens/main_screen.dart';
 
@@ -26,14 +26,11 @@ class MyApp extends StatelessWidget {
       ),
       home: MultiBlocProvider(
         providers: [
-          BlocProvider<GetlistCubit>(
-            create: (BuildContext context) => GetlistCubit(FakeBoxesAPI()),            
+          BlocProvider<GetlistBloc>(
+            create: (BuildContext context) => GetlistBloc(FakeBoxesAPI()),            
           ),
-          BlocProvider<OpenboxCubit>(
-            create: (BuildContext context) => OpenboxCubit(),            
-          ),
-          BlocProvider<FilterBoxesCubit>(
-            create: (BuildContext context) => FilterBoxesCubit(),            
+          BlocProvider<FilterBoxesBloc>(
+            create: (BuildContext context) => FilterBoxesBloc(),            
           ),
         ],
       child: MainCubeScreen(),

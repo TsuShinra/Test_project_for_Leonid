@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/box_item.dart';
-import '../cubit/filterboxes_cubit.dart';
+import '../bloc/filterboxes_bloc.dart';
 import './show_list.dart';
 
 class BuildBoxes extends StatelessWidget {
@@ -22,33 +22,38 @@ class BuildBoxes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Container(
       child: Column(children: <Widget>[
-        TextField(
-          controller: _filterController,
-          decoration: InputDecoration(
-            hintText: 'Фильтровать данные',
+          BlocBuilder<FilterBoxesBloc, FilterBoxesState>(
+            builder: (context, state) {
+              return TextField(
+                controller: _filterController,
+                decoration: InputDecoration(
+                  hintText: 'Фильтровать данные',
+                ),
+                onTap: () {
+                  _filterController.text = '';
+                  final filterBoxesBloc = BlocProvider.of<FilterBoxesBloc>(context);
+                  filterBoxesBloc.add(FilterBoxes(boxes, _filterController.text));
+                },
+                onChanged: (result) {
+                  final filterBoxesBloc = BlocProvider.of<FilterBoxesBloc>(context);
+                  filterBoxesBloc.add(FilterBoxes(boxes, result));}
+              );
+            },
           ),
-          onTap: () {
-            _filterController.text = '';
-            BlocProvider.of<FilterBoxesCubit>(context)
-                .filterBoxes(_filterController.text, boxes);
-          },
-          onChanged: (result) => BlocProvider.of<FilterBoxesCubit>(context)
-              .filterBoxes(result, boxes),
-        ),
-        BlocBuilder<FilterBoxesCubit, FilterBoxesState>(
-          builder: (context, state) {
-            if (state is FilterBoxesInitial) {
-              return ShowList(
-                  mediaQuery: mediaQuery, appBar: appBar, boxes: boxes);
-            } else if (state is FilteredBoxes) {
-              return ShowList(
-                  mediaQuery: mediaQuery, appBar: appBar, boxes: state.boxes);
-            }
-          },
-        )
-      ]),
+          BlocBuilder<FilterBoxesBloc, FilterBoxesState>(
+              builder: (context, state) {
+                if (state is FilterBoxesInitial) {
+                  return ShowList(
+                      mediaQuery: mediaQuery, appBar: appBar, boxes: boxes);
+                } else if (state is FilteredBoxes) {
+                  return ShowList(
+                      mediaQuery: mediaQuery, appBar: appBar, boxes: state.boxes);
+                }
+              },
+            ),
+        ]),
     );
   }
 }
