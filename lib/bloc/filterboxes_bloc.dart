@@ -16,12 +16,22 @@ class FilterBoxesBloc extends Bloc<FilterBoxesEvent, FilterBoxesState> {
     FilterBoxesEvent event,
   ) async* {
     if (event is FilterBoxes) {
-      List<BoxItem> filteredBoxes = event.boxes;
-      filteredBoxes = event.boxes
-          .where((boxes) =>
-              (boxes.title.toLowerCase().contains(event.filter.toLowerCase())))
-          .toList();
-      yield (FilteredBoxes(boxes: filteredBoxes, filter: event.filter));
+      // List<BoxItem> filteredBoxes = event.boxes;
+      event.boxes.forEach((element) {
+        if (!element.title.toLowerCase().contains(event.filter.toLowerCase())) {
+          print(element.title);
+          element.filtered = true;
+          print(element.filtered);
+        } else {
+          element.filtered = false;
+        }
+      });
+      print(event.boxes[1].filtered);
+      // filteredBoxes = event.boxes
+      //     .where((boxes) =>
+      //         (boxes.title.toLowerCase().contains(event.filter.toLowerCase())))
+      //     .toList();
+      yield (FilteredBoxes(boxes: event.boxes, filter: event.filter));
     }
   }
 }

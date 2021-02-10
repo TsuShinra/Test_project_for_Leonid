@@ -8,7 +8,7 @@ abstract class FilterBoxesEvent extends Equatable {
 }
 
 class FilterBoxes extends FilterBoxesEvent {
-  List<BoxItem> boxes;
+  final List<BoxItem> boxes;
   final String filter;
   FilterBoxes(this.boxes, this.filter);
 }

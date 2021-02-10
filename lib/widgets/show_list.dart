@@ -42,7 +42,8 @@ class ShowList extends StatelessWidget {
                         child: BlockItem(
                             title: boxes[i].title,
                             text: boxes[i].text,
-                            expanded: boxes[i].expanded),
+                            expanded: boxes[i].expanded,
+                            filtered: boxes[i].filtered),
                       ),
                     );
                   },

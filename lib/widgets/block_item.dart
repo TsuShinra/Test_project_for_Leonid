@@ -6,18 +6,24 @@ class BlockItem extends StatelessWidget {
   final String title;
   final String text;
   bool expanded;
+  bool filtered;
 
-  BlockItem({this.title, this.text, this.expanded});
+  BlockItem({this.title, this.text, this.expanded, this.filtered});
   @override
   Widget build(BuildContext context) {
-    return Card(
+    print(filtered);
+    return Offstage(
+      offstage: filtered,
+      child: Card(
         margin: EdgeInsets.all(10),
         child: Column(
           children: [
             Container(
               width: 400,
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-              child: Text(title, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+              child: Text(title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold)),
             ),
             if (expanded)
               Container(
@@ -25,7 +31,7 @@ class BlockItem extends StatelessWidget {
                   child: Column(children: <Widget>[
                     Container(
                       width: 400,
-                        child: Text(text),
+                      child: Text(text),
                     ),
                     RaisedButton(
                         onPressed: () {
@@ -36,6 +42,8 @@ class BlockItem extends StatelessWidget {
                         child: Text('Подробнее...'))
                   ])),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
