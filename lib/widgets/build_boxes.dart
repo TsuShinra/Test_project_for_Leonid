@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/box_item.dart';
-import '../bloc/filterboxes_bloc.dart';
+import '../bloc/boxes_operations_bloc.dart';
 import './show_list.dart';
 
 class BuildBoxes extends StatelessWidget {
@@ -33,11 +33,11 @@ class BuildBoxes extends StatelessWidget {
             ),
             onTap: () {
               _controller.text = '';
-              final filterBoxesBloc = BlocProvider.of<FilterBoxesBloc>(context);
+              final filterBoxesBloc = BlocProvider.of<BoxesOperationsBloc>(context);
               filterBoxesBloc.add(UnFilterBoxes(boxes, _controller.text));
             },
             onChanged: (result) {
-              final filterBoxesBloc = BlocProvider.of<FilterBoxesBloc>(context);
+              final filterBoxesBloc = BlocProvider.of<BoxesOperationsBloc>(context);
               filterBoxesBloc.add(FilterBoxes(boxes, result));
             }),
         ShowList(mediaQuery: mediaQuery, appBar: appBar, boxes: boxes)

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import './bloc/filterboxes_bloc.dart';
+import 'bloc/boxes_operations_bloc.dart';
 import './models/boxes_fakeAPI.dart';
 import './bloc/getlist_bloc.dart';
 
@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
           BlocProvider<GetlistBloc>(
             create: (BuildContext context) => GetlistBloc(FakeBoxesAPI()),            
           ),
-          BlocProvider<FilterBoxesBloc>(
-            create: (BuildContext context) => FilterBoxesBloc(),            
+          BlocProvider<BoxesOperationsBloc>(
+            create: (BuildContext context) => BoxesOperationsBloc(),            
           ),
         ],
       child: MainCubeScreen(),

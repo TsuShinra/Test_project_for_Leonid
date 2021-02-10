@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/box_item.dart';
-// import '../bloc/openbox_bloc.dart';
-import '../bloc/filterboxes_bloc.dart';
+import '../bloc/boxes_operations_bloc.dart';
 import './block_item.dart';
 import './column_builder.dart';
 
@@ -21,7 +20,7 @@ class ShowList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FilterBoxesBloc, FilterBoxesState>(
+    return BlocBuilder<BoxesOperationsBloc, BoxesOperationsState>(
         builder: (context, state) {
       return Container(
         height: (mediaQuery.size.height -
@@ -34,7 +33,7 @@ class ShowList extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   final openboxesBloc =
-                      BlocProvider.of<FilterBoxesBloc>(context);
+                      BlocProvider.of<BoxesOperationsBloc>(context);
                   openboxesBloc.add(OpenBox(boxes, i));
                 },
                 child: Container(

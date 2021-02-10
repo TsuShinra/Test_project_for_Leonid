@@ -5,15 +5,15 @@ import 'package:equatable/equatable.dart';
 
 import '../models/box_item.dart';
 
-part 'filterboxes_event.dart';
-part 'filterboxes_state.dart';
+part 'boxes_operations_event.dart';
+part 'boxes_operations_state.dart';
 
-class FilterBoxesBloc extends Bloc<FilterBoxesEvent, FilterBoxesState> {
-  FilterBoxesBloc() : super(FilterBoxesInitial());
+class BoxesOperationsBloc extends Bloc<BoxesOperationsEvent, BoxesOperationsState> {
+  BoxesOperationsBloc() : super(BoxesOperationsInitial());
 
   @override
-  Stream<FilterBoxesState> mapEventToState(
-    FilterBoxesEvent event,
+  Stream<BoxesOperationsState> mapEventToState(
+    BoxesOperationsEvent event,
   ) async* {
     if (event is FilterBoxes) {
       event.boxes.forEach((element) {
