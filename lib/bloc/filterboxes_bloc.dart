@@ -16,22 +16,34 @@ class FilterBoxesBloc extends Bloc<FilterBoxesEvent, FilterBoxesState> {
     FilterBoxesEvent event,
   ) async* {
     if (event is FilterBoxes) {
-      // List<BoxItem> filteredBoxes = event.boxes;
       event.boxes.forEach((element) {
         if (!element.title.toLowerCase().contains(event.filter.toLowerCase())) {
-          print(element.title);
           element.filtered = true;
-          print(element.filtered);
         } else {
           element.filtered = false;
         }
       });
-      print(event.boxes[1].filtered);
-      // filteredBoxes = event.boxes
-      //     .where((boxes) =>
-      //         (boxes.title.toLowerCase().contains(event.filter.toLowerCase())))
-      //     .toList();
       yield (FilteredBoxes(boxes: event.boxes, filter: event.filter));
+      yield(UnFilteredBoxes(boxes: event.boxes, filter: event.filter));
+    }
+    if(event is UnFilterBoxes) {
+      event.boxes.forEach((element) {element.filtered = false;});
+      yield(UnFilteredBoxes(boxes: event.boxes, filter: event.filter));
+    }
+    if (event is OpenBox) {
+      var indexOpen = event.boxes.indexWhere((box) => box.expanded);
+      if (event.boxes[event.index].expanded == false) {
+        if (indexOpen >= 0) {
+          event.boxes[indexOpen].expanded = false;
+          yield (OtherBoxesClosed(
+              boxes: event.boxes, index: event.index, closedIndex: indexOpen));
+        }
+        event.boxes[event.index].expanded = true;
+        yield (OpenboxExpanded(boxes: event.boxes));
+      } else if (event.boxes[event.index].expanded == true) {
+        event.boxes[event.index].expanded = false;
+        yield (OpenboxClosed(boxes: event.boxes));
+      }
     }
   }
 }

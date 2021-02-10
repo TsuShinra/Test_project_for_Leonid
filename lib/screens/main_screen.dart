@@ -11,7 +11,6 @@ class MainCubeScreen extends StatefulWidget {
 }
 
 class _MainCubeScreenState extends State<MainCubeScreen> {
-  TextEditingController _filterController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,6 @@ class _MainCubeScreenState extends State<MainCubeScreen> {
               } else if (state is ListLoaded) {
                 return SingleChildScrollView(
                   child: BuildBoxes(
-                    filterController: _filterController,
                     mediaQuery: mediaQuery,
                     appBar: appBar,
                     boxes: state.boxes));

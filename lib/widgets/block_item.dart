@@ -11,7 +11,6 @@ class BlockItem extends StatelessWidget {
   BlockItem({this.title, this.text, this.expanded, this.filtered});
   @override
   Widget build(BuildContext context) {
-    print(filtered);
     return Offstage(
       offstage: filtered,
       child: Card(
